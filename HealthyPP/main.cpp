@@ -46,7 +46,7 @@ int insereInfo(listaDePessoas *q, char nome[60], char genero[10], float altura, 
 void mostra(listaDePessoas *q);
 int pesquisaPorNome(listaDePessoas *q, char nome[60]);
 int pesquisaPorId(listaDePessoas *q, int id);
-int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60]);
+int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int id);
 
 int main(void)
 {
@@ -93,9 +93,9 @@ int main(void)
     insereInfo(&listaDePacientes,"Joao Gabriel Moreira Nogueira","Masculino",1.76,86,"O+","NAO");
     insereInfo(&listaDePacientes,"Luiz Antonio","Masculino",1.6,65,"A-","DA PAZ");
 
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao");
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com arroz");
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com carne");
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao",0);
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com arroz",0);
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com carne",0);
 
     mostra(&listaDePacientes);
 
@@ -134,6 +134,13 @@ int main(void)
 
     scanf("%d",&idPesquisa);
     getchar();
+
+    printf("\n\nDigite o historico: ");
+    scanf("%59[^\n]s",&historico);
+    getchar();
+
+
+    insereHistoricoM(&listaDePacientes,nomePessoa,historico,idPesquisa);
 
     pesquisaPorId(&listaDePacientes, idPesquisa);
 
@@ -378,22 +385,39 @@ int pesquisaPorId(listaDePessoas *q, int id)
 }
 
 
-int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60])
+int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int id)
 {
     struct pessoa *encontra;
     struct informacoes *auxiliar;
     struct historicoHospitalar *danome, *auxDanome; // para nao ficar repetindo os nomes, no caso, historico
-        encontra = q->inicio;
-        danome = (struct historicoHospitalar*) malloc(sizeof(struct historicoHospitalar));
+    int encontrou = 1;
 
+    danome = (struct historicoHospitalar*) malloc(sizeof(struct historicoHospitalar));
+
+    encontra = q->inicio;
 
     do{
         if(strcmp(encontra->nome, nome)==0)
+        {
+            encontrou = 0;
+            break;
+        }
+        encontra = encontra->proximo;
+    }while(q->inicio->nome != encontra->nome);
+
+
+    if(encontrou)
+    {
+    encontra = q->inicio;
+    do{
+        if(encontra->id == id)
         {
             break;
         }
         encontra = encontra->proximo;
     }while(q->inicio->nome != encontra->nome);
+    }
+
     if(encontra->info->historico == NULL)
     {
         encontra->info->historico = danome;
@@ -403,6 +427,7 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60])
     }
 
     auxDanome = encontra->info->historico;
+
     while(auxDanome->proximo != NULL)
     {
         if(auxDanome->proximo != NULL)
@@ -410,6 +435,7 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60])
         auxDanome = auxDanome->proximo;
         }
     }
+
     auxDanome->proximo = danome;
     strcpy(danome->historico,historico);
     danome->proximo = NULL;
