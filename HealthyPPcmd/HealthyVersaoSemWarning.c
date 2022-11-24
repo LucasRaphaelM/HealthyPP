@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
+//LISTA COM INFORMAÇÃO DE NOMES E ID DAS PESSOAS
 struct pessoa
 {
     struct pessoa *anterior;
@@ -11,6 +12,7 @@ struct pessoa
     struct pessoa *proximo;
 };
 
+//LISTA COM INFORMAÇÕES DAS PESSOAS <- ESSA LISTA VAI SER CONECTADA A LISTA DE CIMA E SÓ VAI TER UM NÓ PARA CADA PESSOA
 struct informacoes
 {
     struct pessoa *voltar;
@@ -24,29 +26,30 @@ struct informacoes
     struct historicoHospitalar *historico;
 };
 
+//LISTA COM HISTORICO HOSPITALAR DAS PESSOAS
 struct historicoHospitalar
 {
     char historico[60];
     struct historicoHospitalar *proximo;
 };
 
+//ONDE APONTA PARA O INICIO DA LISTA
 typedef struct
 {
     struct pessoa *inicio;
     struct pessoa *fim;
 } listaDePessoas;
 
-int inserePessoa(listaDePessoas *q, char nome[60], int id);
-int insereInfo(listaDePessoas *q, char nome[60], char genero[10], float altura, float peso, char tipoSangue[4],char medicacoes[100]);
-void mostra(listaDePessoas *q);
-int pesquisaPorNome(listaDePessoas *q, char nome[60]);
-int pesquisaPorId(listaDePessoas *q, int id);
-int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int id);
+int inserePessoa(listaDePessoas *q, char nome[60], int id);//INSERE O NOME E O ID DA PESSOA NA LISTA PRINCIPAL
+int insereInfo(listaDePessoas *q, char nome[60], char genero[10], float altura, float peso, char tipoSangue[4],char medicacoes[100]);//INSERE AS INFORMAÇÕES DAS PESSOAS <- PARA A SEGUNDA LISTA
+void mostra(listaDePessoas *q);//FUNÇÃO QUE MOSTRA TODAS AS PESSOAS E SEUS ID'S
+int pesquisaPorNome(listaDePessoas *q, char nome[60]);//PESQUISA PESSOAS POR NOME <- APENAS DIGITANDO MOREIRA CONSIGUIRA ACHAR EU E MEU IRMÃO POR TER MESMO SOBRENOME ( PODE SER VISTO NOS INSERES ABAIXO)
+int pesquisaPorId(listaDePessoas *q, int id);//PESQUISA A PESSOA POR ID <- GERALMENTE SERA USADO DEPOIS DE SER PESQUISADO POR NOME PARA CONFIRMAMENTO
+int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int id);//INSERE HISTÓRICO TANTO POR NOME QUANTO POR ID
 
 int main(void)
 {
     listaDePessoas listaDePacientes;
-    int teste;
     int id=1;
     char nomePessoa[60];
     char genero[10];
@@ -60,6 +63,7 @@ int main(void)
     listaDePacientes.inicio = NULL;
     listaDePacientes.fim = NULL;
 
+    //PUXANDO TODAS AS FUNÇÕES PARA INSERIR OS NOMES E O ID NA ALOCAÇÃO DINAMICA DA LISTA PRINCIPAL E FAZ id++ PARA O PROXIMO DA LISTA JA RECEBER O PROXIMO ID
     inserePessoa(&listaDePacientes,"Daniel Siqueira Monteiro",id);
     id++;
     inserePessoa(&listaDePacientes,"Lucas Raphael Moreira Nogueira",id);
@@ -80,18 +84,21 @@ int main(void)
     id++;
     inserePessoa(&listaDePacientes,"Luiz Antonio",id);
 
-    insereInfo(&listaDePacientes,"Daniel Siqueira Monteiro","Masculino",1.84,82,"O-","ADORA FUMAR UMA");
+    //INSERE INFORMAÇÕES PESSOAIS NA SEGUNDA LISTA( NOME COMPLETO / ALTURA / PESO / TIPO SANGUÍNEO / SE USA ALGUM TIPO DE MEDICAÇÃO )
+    insereInfo(&listaDePacientes,"Daniel Siqueira Monteiro","Masculino",1.84,82,"O-","NAO");
     insereInfo(&listaDePacientes,"Lucas Raphael Moreira Nogueira","Masculino",1.84,73,"O+","NAO");
-    insereInfo(&listaDePacientes,"Diogo Lima","Masculino",1.66,68,"A+","VAIPIZIN");
+    insereInfo(&listaDePacientes,"Diogo Lima","Masculino",1.66,68,"A+","NAO");
     insereInfo(&listaDePacientes,"Bruno De Toledo Nicollielo","Masculino",1.84,73,"O+","NAO");
     insereInfo(&listaDePacientes,"Joao Gabriel Moreira Nogueira","Masculino",1.76,86,"O+","NAO");
     insereInfo(&listaDePacientes,"Joao Gabriel Moreira Nogueira","Masculino",1.76,86,"O+","NAO");
-    insereInfo(&listaDePacientes,"Luiz Antonio","Masculino",1.6,65,"A-","DA PAZ");
+    insereInfo(&listaDePacientes,"Luiz Antonio","Masculino",1.6,65,"A-","NAO");
 
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao",0);
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com arroz",0);
-    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","pao com carne",0);
+    //FUNÇÃO QUE INSERE UM HISÓRICO HOSPITALAR/DOENÇAS DA PESSOA ( PASSAMOS O NOME PARA A FUNÇÃO CHECAR EM QUE PESSOA DEVEMOS INSERIR O HISTÓRICO, OU PUDEMOS USAR O ID TAMBEM
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","OSSO FRATURADO",0);
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","ASMA",0);
+    insereHistoricoM(&listaDePacientes,"Daniel Siqueira Monteiro","ROMPIMENTO DO LIGAMENTO",0);
 
+    //FUNÇÃO QUE MOSTRA TODAS AS PESSOAS E SEUS ID'S
     mostra(&listaDePacientes);
 
 
@@ -130,13 +137,14 @@ int main(void)
     scanf("%d",&idPesquisa);
     getchar();
 
-    printf("\n\nDigite o historico: ");
+    /*printf("\n\nDigite o historico: ");
     scanf("%59[^\n]s",&historico);
-    getchar();
+    getchar();*/
 
+    //FUNÇÃO QUE VAI INSERIR UM NOVO HISTÓRICO MEDICO PARA A PESSOA
+    //insereHistoricoM(&listaDePacientes,nomePessoa,historico,idPesquisa);
 
-    insereHistoricoM(&listaDePacientes,nomePessoa,historico,idPesquisa);
-
+    //FUNÇÃO QUE PESQUISA A PESSOA POR ID E MOSTRA TODAS AS INFORMAÇÕES DELA
     pesquisaPorId(&listaDePacientes, idPesquisa);
 
     //mostra(&listaDePacientes);
@@ -166,7 +174,7 @@ int inserePessoa(listaDePessoas *q, char nome[60], int id)
     }
 
     // Lista não vazia, portanto insere um novo inicio
-    if (strcmp(q->inicio->nome,nome) > 0)
+    if (strcmp(q->inicio->nome,nome) > 0)//USANDO STRCMP PARA COMPARAR OS NOMES E ENCAIXALOS NA LISTA EM FORMA ALFABETICA
     {
         strcpy(aux->nome, nome);
         aux->id = id;
@@ -180,7 +188,7 @@ int inserePessoa(listaDePessoas *q, char nome[60], int id)
     }
 
     // Lista não vazia, portanto insere um novo final
-    if (strcmp(q->fim->nome,nome) < 0)
+    if (strcmp(q->fim->nome,nome) < 0)//USANDO STRCMP PARA COMPARAR OS NOMES E ENCAIXALOS NA LISTA EM FORMA ALFABETICA
     {
         strcpy(aux->nome, nome);
         aux->id = id;
@@ -196,7 +204,7 @@ int inserePessoa(listaDePessoas *q, char nome[60], int id)
     // Lista não vazia, portanto insere no meio
     umAnterior = q->inicio;
     atual = q->inicio->proximo;
-    while (strcmp(atual->nome,nome) < 0)
+    while (strcmp(atual->nome,nome) < 0)//USANDO STRCMP PARA COMPARAR OS NOMES E ENCAIXALOS NA LISTA EM FORMA ALFABETICA
     {
         umAnterior = atual;
         atual = atual->proximo;
@@ -227,7 +235,7 @@ void mostra(listaDePessoas *q)
             printf("ID: %d ", aux->id);
             printf("NOME: %s\n", aux->nome);
             aux = aux->proximo;
-        } while (aux != q->inicio);
+        } while (aux != q->inicio);//PERCORRE POR TODA A LISTA PRINTANDO NA TELA O NOME E O ID DE TODOS ATÉ VOLTAR PRO INICIO DA LISTA
     }
 }
 
@@ -253,9 +261,9 @@ int pesquisaPorNome(listaDePessoas *q, char nome[60])
             //if responsavel por comparar pelo menos 3 letras iguais ja printa o NOME e ID e ja passa para o proximo da lista
             if(aux->nome[i] == nome[j])
             {
-                i++;
+                i++;//i++ E j++ ANDAM JUNTOS
                 j++;
-                printa++;
+                printa++;//PRINTA++ QUANDO CHEGAR A 3, SIGNIFICA QUE PELO MENOS 3 LETRAS ESTÃO IGUAIS, ENTÃO ENTRA NO IF E PRINTA O ID E O NOME DA PESSOA QUE SE IGUALOU PELO MENOS 3 LETRAS
                 if(printa >= 3)
                 {
                     printf("ID: %d ", aux->id);
@@ -268,14 +276,14 @@ int pesquisaPorNome(listaDePessoas *q, char nome[60])
                     break;
                 }
             }
-            else
+            else//CASO CONTRARIO RESETA AS VARIAVEIS PARA PODER PASSAR POR TODAS AS POSSIBILIDADES POSSIVEIS
             {
                 k++;
                 i = k;
                 j = 0;
                 printa = 0;
             }
-        }while(i < strlen(aux->nome));
+        }while(i < strlen(aux->nome));//FICA NO LOOP ATÉ PASSAR POR TODO O NOME QUE ESTA NA LISTA
         k=0;
         i=0;
         j=0;
@@ -299,8 +307,8 @@ int insereInfo(listaDePessoas *q, char nome[60], char genero[10], float altura, 
         if(strcmp(auxPessoa->nome, nome) == 0)
             break;
         auxPessoa = auxPessoa->proximo;
-    }while(auxPessoa->nome != q->inicio->nome);
-    if(auxPessoa->info == NULL)
+    }while(auxPessoa->nome != q->inicio->nome);//LOOP QUE PROCURA EM QUAL NO A PESSOA ESTA PARA ADICIONAR AS INFORMAÇÕES A ELA
+    if(auxPessoa->info == NULL)//CASO A PESSOA AINDA NÃO TENHA CADASTRO(INFORMAÇÕES) VAI SER ADICIONADA
     {
         auxInfo = (struct informacoes*) malloc(sizeof(struct informacoes));
         auxPessoa->info = auxInfo;
@@ -313,19 +321,6 @@ int insereInfo(listaDePessoas *q, char nome[60], char genero[10], float altura, 
         auxInfo->altura = altura;
         strcpy(auxInfo->tipoSangue,tipoSangue);
         strcpy(auxInfo->medicacoes,medicacoes);
-        /*printf("\n---------------LISTA PESSOAS---------------\n");
-        printf("ID: %d\n",auxPessoa->id);
-        printf("NOME: %s\n",auxPessoa->nome);
-        printf("\n-------------------------------------------\n");
-        printf("\n-------------LISTA INFORMACOES-------------\n");
-        printf("ID: %d\n",auxInfo->id);
-        printf("NOME: %s\n",auxInfo->nome);
-        printf("GENERO: %s\n",auxInfo->genero);
-        printf("ALTURA: %f\n",auxInfo->altura);
-        printf("PESO: %f\n",auxInfo->peso);
-        printf("TIPO SANGUINEO: %s\n", auxInfo->tipoSangue);
-        printf("MEDICACOES: %s\n",auxInfo->medicacoes);
-        printf("\n-------------------------------------------\n");*/
         return 1;
     }
     else
@@ -350,9 +345,9 @@ int pesquisaPorId(listaDePessoas *q, int id)
             break;
         }
         auxPessoa = auxPessoa->proximo;
-    }while(auxPessoa->nome != q->inicio->nome);
+    }while(auxPessoa->nome != q->inicio->nome);//PASSA PELA LISTA TODA PARA ENCONTRAR A PESSOA POR ID
 
-    if(confere)
+    if(confere)//SE ACHAR A PESSOA ENTRA NESSE IF E PRINTA TODAS AS INFORMAÇÕES
     {
     auxInfo = auxPessoa->info;
     printf("\n-------------LISTA INFORMACOES-------------\n");
@@ -369,10 +364,10 @@ int pesquisaPorId(listaDePessoas *q, int id)
     {
         printf("\n- %s",auxHistorico->historico);
         auxHistorico = auxHistorico->proximo;
-    }while(auxHistorico != NULL);
+    }while(auxHistorico != NULL);//LOOP QUE VAI PRINTAR TODO HISTORICO DA PESSOA
     printf("\n-------------------------------------------\n");
     }
-    else
+    else//CASO NAO ENCONTRE A PESSOA
     {
         printf("\n\nID NAO ENCONTRADO\n\n");
         return 0;
@@ -398,10 +393,10 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int i
             break;
         }
         encontra = encontra->proximo;
-    }while(q->inicio->nome != encontra->nome);
+    }while(q->inicio->nome != encontra->nome);//LOOP QUE PROCURA O NO DA PESSOA POR NOME E CASO NÃO ENCONTRE POR NOME NO DO-WHILE DE BAIXO PROCURA POR ID
 
 
-    if(encontrou)
+    if(encontrou)//SÓ ENTRA NESSE IF PRA PESQUISAR POR ID CASO NÃO ENCONTRE A PESSOA POR NOME
     {
     encontra = q->inicio;
     do{
@@ -410,10 +405,10 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int i
             break;
         }
         encontra = encontra->proximo;
-    }while(q->inicio->nome != encontra->nome);
+    }while(q->inicio->nome != encontra->nome);//LOOP PRA PORCURAR NO DA PESSOA POR ID
     }
 
-    if(encontra->info->historico == NULL)
+    if(encontra->info->historico == NULL)//SE FOR A PRIMEIRA VEZ DA PESSOA DO HISPITAL
     {
         encontra->info->historico = danome;
         strcpy(encontra->info->historico->historico,historico);
@@ -421,7 +416,7 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int i
         return 1;
     }
 
-    auxDanome = encontra->info->historico;
+    auxDanome = encontra->info->historico;//CASO FOR A SEGUNDA O MAIS VEZ DA PESSOA NO HOSPITAL
 
     while(auxDanome->proximo != NULL)
     {
@@ -429,7 +424,7 @@ int insereHistoricoM(listaDePessoas *q, char nome[60], char historico[60], int i
         {
         auxDanome = auxDanome->proximo;
         }
-    }
+    }//WHILE QUE PROCURA QUAL HISTÓRICO TEM O PONTEIRO DE PROXIMO APONTADO PRA NULO PARA ADICIONAR O NOVO HISTÓRICO
 
     auxDanome->proximo = danome;
     strcpy(danome->historico,historico);
