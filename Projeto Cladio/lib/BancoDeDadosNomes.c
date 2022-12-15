@@ -1,9 +1,16 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ * Copyright
+ **/
 #include "BancoDeDadosNomes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "raylib.h"
 
-    
+
 
 void insereBancoDeDados(listaDePessoas *lista)
 {
@@ -36,7 +43,7 @@ void insereBancoDeDados(listaDePessoas *lista)
     char medicacoes[60] = "DESCONHECIDAS";
     char historico[60] = "PRIMEIRA VEZ";
 
- 
+
 
     for(id=1; id<11; id++)
     {
@@ -44,6 +51,5 @@ void insereBancoDeDados(listaDePessoas *lista)
         insereInfo(lista,corpo[id-1],genero[id-1],altura[id-1],peso[id-1],tipoSangue[id-1],medicacoes);
         insereHistoricoM(lista,corpo[id-1],historico, id);
     }
-        insereHistoricoM(lista,corpo[2],historico, 3);
 }
 

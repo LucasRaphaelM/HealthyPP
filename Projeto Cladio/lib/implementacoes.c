@@ -1,3 +1,10 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ * Copyright
+ **/
 #include <string.h>
 #include "listas.h"
 #include <stdlib.h>
@@ -254,7 +261,7 @@ int pesquisaPorId(listaDePessoas *q, int id) //FUNÇÃO QUE PESQUISA A PESSOA PO
         BeginDrawing();
         DrawText("NAO HA CADASTROS\nCOM ESSE USUARIO",100, 200,100,MAROON);
         EndDrawing();
-        return 0;
+        return 4;
     }
     return 0;
 }

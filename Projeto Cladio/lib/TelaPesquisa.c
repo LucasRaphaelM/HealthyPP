@@ -1,3 +1,10 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ * Copyright
+ **/
 #include "TelaPesquisa.h"
 #include "raylib.h"
 #include <ctype.h>
@@ -7,7 +14,6 @@
 bool caixaNomeP = false;
 bool caixaIdP = false;
 bool setar0 = true;
-bool mostrarNomes = false;
 bool fundo = true;
 
 int letterCountNomeP = 0;
@@ -21,7 +27,7 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
     Color Cinzabonito2 = {180,180,180,255};
 
     Image lupa2 = LoadImage("../images/lupa.png");
-    ImageResize(&lupa2, 50, 50); 
+    ImageResize(&lupa2, 50, 50);
     Texture2D lupa =  LoadTextureFromImage(lupa2);
 
     Rectangle CampoNome = {10,10,1100,60};
@@ -54,9 +60,9 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
                     if ((key >= 32) && (key <= 125) && (letterCountNomeP < 39))
                      {
                         info.nome[letterCountNomeP] = toupper((char)key);
-                        info.nome[letterCountNomeP+1] = '\0'; 
+                        info.nome[letterCountNomeP+1] = '\0';
                         letterCountNomeP++;
-                    }   
+                    }
 
                      key = GetCharPressed();
 
@@ -90,9 +96,9 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
                     if ((key >= 32) && (key <= 125) && (letterCountIdP < 3))
                      {
                         info.id[letterCountIdP] = toupper((char)key);
-                        info.id[letterCountIdP+1] = '\0'; 
+                        info.id[letterCountIdP+1] = '\0';
                         letterCountIdP++;
-                    }   
+                    }
 
                      key = GetCharPressed();
 
@@ -105,12 +111,14 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
             }
         else
             SetMouseCursor(MOUSE_CURSOR_DEFAULT);
-    
+
     if (CheckCollisionPointRec(GetMousePosition(), voltar) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
     {
         setar0 = true;
         UnloadTexture(lupa);
         UnloadImage(lupa2);
+        letterCountIdP = 0;
+        letterCountNomeP = 0;
         return 0;
     }
 
@@ -121,6 +129,8 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
         *idP = info.idI;
         UnloadTexture(lupa);
         UnloadImage(lupa2);
+        letterCountIdP = 0;
+        letterCountNomeP = 0;
         return 3;
     }
 
@@ -163,6 +173,7 @@ int PesquisarPaciente(listaDePessoas *lista, int *idP)
             DrawText("ID",(int)CampoId.x+ 12, (int)CampoId.y + 8, 40, Cinzabonito2);
     }
     DrawText(info.id,(int)CampoId.x+ 12, (int)CampoId.y + 8, 40, DARKGRAY);
+    DrawText("PARA SELECIONAR A PESSOA DESEJADA, E NECESSARIO APOS SAEBER O ID, COLOCA-LO E CLICAR NA LUPA",10, 70, 20, RED);
 
 
     EndDrawing();

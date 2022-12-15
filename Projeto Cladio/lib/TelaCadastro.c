@@ -1,3 +1,10 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ * Copyright
+ **/
 #include "TelaCadastro.h"
 #include "raylib.h"
 #include <stdio.h>
@@ -8,7 +15,7 @@
 bool controleNome = true;
 
 bool caixaNome = false;
-bool caixaSexo = false; 
+bool caixaSexo = false;
 bool caixaAltura = false;
 bool caixaSangue = false;
 bool caixaPeso = false;
@@ -63,7 +70,7 @@ int TelaCadastro(listaDePessoas *lista)
 
             SetMouseCursor(MOUSE_CURSOR_IBEAM);
             caixaNome = true;
-            caixaSexo = false; 
+            caixaSexo = false;
             caixaAltura = false;
             caixaSangue = false;
             caixaPeso = false;
@@ -81,9 +88,9 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountNome < 39))
                      {
                         info.nome[letterCountNome] = toupper((char)key);
-                        info.nome[letterCountNome+1] = '\0'; 
+                        info.nome[letterCountNome+1] = '\0';
                         letterCountNome++;
-                    }   
+                    }
 
                      key = GetCharPressed();
 
@@ -126,9 +133,9 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountAltura < 4))
                      {
                         info.alturac[letterCountAltura] = toupper((char)key);
-                        info.alturac[letterCountAltura+1] = '\0'; 
+                        info.alturac[letterCountAltura+1] = '\0';
                         letterCountAltura++;
-                    }   
+                    }
 
                      key = GetCharPressed();
 
@@ -170,9 +177,9 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountHistorico < 59))
                      {
                         info.historico[letterCountHistorico] = toupper((char)key);
-                        info.historico[letterCountHistorico+1] = '\0'; 
+                        info.historico[letterCountHistorico+1] = '\0';
                         letterCountHistorico++;
-                    }   
+                    }
 
                      key = GetCharPressed();
 
@@ -214,9 +221,9 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountPeso < 5))
                      {
                         info.pesoc[letterCountPeso] = toupper((char)key);
-                        info.pesoc[letterCountPeso+1] = '\0'; 
+                        info.pesoc[letterCountPeso+1] = '\0';
                         letterCountPeso++;
-                        }   
+                        }
 
                      key = GetCharPressed();
 
@@ -263,9 +270,9 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCounterMedicacoes < 59))
                      {
                         info.medicacoes[letterCounterMedicacoes] = toupper((char)key);
-                        info.medicacoes[letterCounterMedicacoes+1] = '\0'; 
+                        info.medicacoes[letterCounterMedicacoes+1] = '\0';
                         letterCounterMedicacoes++;
-                        }   
+                        }
 
                      key = GetCharPressed();
 
@@ -308,7 +315,7 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountSexo < 9))
                      {
                         info.genero[letterCountSexo] = toupper((char)key);
-                        info.genero[letterCountSexo+1] = '\0'; 
+                        info.genero[letterCountSexo+1] = '\0';
                         letterCountSexo++;
                         }
 
@@ -352,7 +359,7 @@ int TelaCadastro(listaDePessoas *lista)
                     if ((key >= 32) && (key <= 125) && (letterCountSangue < 3))
                      {
                         info.tipoSangue[letterCountSangue] = toupper((char)key);
-                        info.tipoSangue[letterCountSangue+1] = '\0'; 
+                        info.tipoSangue[letterCountSangue+1] = '\0';
                         letterCountSangue++;
                         }
 
@@ -390,16 +397,16 @@ int TelaCadastro(listaDePessoas *lista)
     DrawRectangleRec(CampoNome, Cinzabonito);
     DrawRectangleLines((int)CampoNome.x, (int)CampoNome.y, (int)CampoNome.width, (int)CampoNome.height, DARKGRAY);
 
-    
-    DrawText("SEXO:", (int)Sexo.x , (int)Sexo.y -15, 15, BLACK);  
+
+    DrawText("SEXO:", (int)Sexo.x , (int)Sexo.y -15, 15, BLACK);
     DrawRectangleRec(Sexo, Cinzabonito);
     DrawRectangleLines((int)Sexo.x, (int)Sexo.y, (int)Sexo.width, (int)Sexo.height, DARKGRAY);
-    
-    DrawText("ALTURA:", (int)Altura.x , (int)Altura.y -15, 15, BLACK);  
+
+    DrawText("ALTURA:", (int)Altura.x , (int)Altura.y -15, 15, BLACK);
     DrawRectangleRec(Altura, Cinzabonito);
     DrawRectangleLines((int)Altura.x, (int)Altura.y, (int)Altura.width, (int)Altura.height, DARKGRAY);
 
-    DrawText("PESO:", (int)Peso.x , (int)Peso.y -15, 15, BLACK);  
+    DrawText("PESO:", (int)Peso.x , (int)Peso.y -15, 15, BLACK);
     DrawRectangleRec(Peso, Cinzabonito);
     DrawRectangleLines((int)Peso.x, (int)Peso.y, (int)Peso.width, (int)Peso.height, DARKGRAY);
 

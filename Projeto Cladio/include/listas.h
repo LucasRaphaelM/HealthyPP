@@ -1,3 +1,10 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ * Copyright
+ **/
 //LISTA COM INFORMAÇÃO DE NOMES E ID DAS PESSOAS
 struct pessoa
 {

@@ -5,6 +5,6 @@
  *			Rogério Teixeira de Siqueira
  * Copyright
  **/
-#include "TelaCadastro.h"
+#include "MostrarInfoPacientes.h"
 
-int PesquisarPaciente(listaDePessoas *, int *);
+int NovaConsulta(listaDePessoas *);

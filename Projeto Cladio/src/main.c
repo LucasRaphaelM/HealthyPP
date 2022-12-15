@@ -1,9 +1,20 @@
+/**
+ * Authors: Lucas Raphael Moreira Nogureira, 14/12/2022
+ *          Luiz Antônio Vilhena Marangoni Silva
+ *			Victor Hugo Pires
+ *			Rogério Teixeira de Siqueira
+ *
+ * Copyright
+ * Description: Esse código foi feito com o intuito de ser um beta para uma possivél aplicação
+ * médica que visa conter todos os registros médicos do passiente.
+ *
+ **/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include "raylib.h"
+#include "AdicionarNovoHistorico.h"
 #include "TelaPrincipal.h"
-#include "MostrarInfoPacientes.h"
 
 int main(void)
 {
@@ -32,9 +43,12 @@ int main(void)
             break;
         case 3:
             telas = InformacoesDoPaciente(&listaDePacientes, id);
+            break;
+        case 4:
+            telas = NovaConsulta(&listaDePacientes);
         }
     }
 
-    CloseWindow();  
+    CloseWindow();
     return 0;
 }
